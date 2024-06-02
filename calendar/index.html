@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>カレンダー</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 合計時間、今月の目標テーブル -->
+    <div class="container">
+        <div class="goal-time-container">
+            <h1><a href="#">&lt;</a><span class="month">6月</span><a href="#">&gt;</a></h1>
+            <table class="time">
+                <tr>
+                    <!-- 合計時間をデータベースから入れたい -->
+                    <td class="totalTime">合計時間</td>
+                </tr>
+            </table>
+            <table class="goal">
+                <tr>
+                    <!-- 今月の目標をデータベースから入れたい -->
+                    <td class="monthGoal">今月の目標</td>
+                </tr>
+            </table>
+        </div>
+
+        
+        <table class="calendar">
+            <!-- カレンダーの内容 -->
+            <tr>
+                <th>日</th>
+                <th>月</th>
+                <th>火</th>
+                <th>水</th>
+                <th>木</th>
+                <th>金</th>
+                <th>土</th>
+            </tr>
+            <!-- モーダルウィンドウを実装 -->
+            <tr>
+                <td><span class="date-number">1</span></td>
+                <td><span class="date-number">2</span></td>
+                <td><span class="date-number">3</span></td>
+                <td><span class="date-number">4</span></td>
+                <td><span class="date-number">5</span></td>
+                <td><span class="date-number">6</span></td>
+                <td><span class="date-number">7</span></td>
+            </tr>
+            <tr>
+                <td><span class="date-number">8</span></td>
+                <td><span class="date-number">9</span></td>
+                <td><span class="date-number">10</span></td>
+                <td><span class="date-number">11</span></td>
+                <td><span class="date-number">12</span></td>
+                <td><span class="date-number">13</span></td>
+                <td><span class="date-number">14</span></td>
+            </tr>
+            <tr>
+                <td><span class="date-number">15</span></td>
+                <td><span class="date-number">16</span></td>
+                <td><span class="date-number">17</span></td>
+                <td><span class="date-number">18</span></td>
+                <td><span class="date-number">19</span></td>
+                <td><span class="date-number">20</span></td>
+                <td><span class="date-number">21</span></td>
+            </tr>
+            <tr>
+                <td><span class="date-number">22</span></td>
+                <td><span class="date-number">23</span></td>
+                <td><span class="date-number">24</span></td>
+                <td><span class="date-number">25</span></td>
+                <td><span class="date-number">26</span></td>
+                <td><span class="date-number">27</span></td>
+                <td><span class="date-number">28</span></td>
+            </tr>
+            <tr>
+                <td><span class="date-number">29</span></td>
+                <td><span class="date-number">30</span></td>
+                <td><span class="date-number">31</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+        </table>
+        
+    </div>
+</body>
+</html>
