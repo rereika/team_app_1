@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-left: 18%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* フレックスボックスのアイテムを右に寄せる */
+}
+
+.goal-time-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.goal, .time {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.time {
+    width: 20%;
+    background-color: aqua;
+}
+
+.goal {
+    width: 70%; /* goalと合計で90%になるよう調整 */
+    background-color: lightyellow;
+}
+
+.goal td, .time td {
+    font-size: 30px;
+    height: 120px; /* セルの高さ*/
+    text-align: center; /* テキストを中央揃え */
+    vertical-align: middle; /* 垂直方向の中央揃え */
+}
+
+
+
+.h1 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 10px;
+}
+
+h1 a {
+    text-decoration: none;
+    color: black;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+    border: 1px solid black;
+    text-align: center;
+    height: 100px;
+    position: relative;
+}
+
+.date-number {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 12px;
+    color: black;
+}
+
+.calendar th {
+    height: 30px;
+}
+
+.calendar .today {
+    background: orange !important;
+}
+
+.calendar th:nth-of-type(1), .calendar td:nth-of-type(1) {
+    color: red;
+}
+
+.calendar th:nth-of-type(7), .calendar td:nth-of-type(7) {
+    color: blue;
+}
