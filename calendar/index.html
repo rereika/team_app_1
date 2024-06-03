@@ -7,27 +7,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="goal-time-container">
+        <h1><a href="#"></a><span class="month" style="font-size: 3em;">6月</span><a href="#"></a></h1>
+
+
+        <table class="time">
+            <tr>
+                <!-- 合計時間をデータベースから入れたい -->
+                <td class="totalTime">合計時間:</td>
+                <td>123h<!-- ここにデータベースから引っ張った数値を入れる --></td>
+            </tr>
+        </table>
+        <table class="goal">
+            <tr>
+                <!-- 今月の目標をデータベースから入れたい -->
+                <td class="monthGoal">今月の目標：</td>
+                <td>ああああああああああああああああああ<!-- 今月の目標の文字列を入れる --></td>
+            </tr>
+        </table>
+  </div>
     <!-- 合計時間、今月の目標テーブル -->
     <div class="container">
-        <div class="goal-time-container">
-            <h1><a href="#">&lt;</a><span class="month" style="font-size: 3em;">6月</span><a href="#">&gt;</a></h1>
-
-
-            <table class="time">
-                <tr>
-                    <!-- 合計時間をデータベースから入れたい -->
-                    <td class="totalTime">合計時間</td>
-                </tr>
-            </table>
-            <table class="goal">
-                <tr>
-                    <!-- 今月の目標をデータベースから入れたい -->
-                    <td class="monthGoal">今月の目標</td>
-                </tr>
-            </table>
-        </div>
-
-        
         <table class="calendar">
             <!-- カレンダーの内容 -->
             <tr>
@@ -41,7 +41,13 @@
             </tr>
             <!-- モーダルウィンドウを実装 -->
             <tr>
-                <td><span class="date-number">1</span></td>
+                <td><span class="date-number">1</span>
+                    <!-- ここにtabをデータから引っ張る -->
+                    <div class="event">PHP</div>
+                    <div class="event">Quest</div>
+                    <div class="event">MySQL</div>
+                    <div class="event">Laravel</div>
+                </td>
                 <td><span class="date-number">2</span></td>
                 <td><span class="date-number">3</span></td>
                 <td><span class="date-number">4</span></td>
@@ -87,6 +93,19 @@
             </tr>
             
         </table>
+
+        <div class="side">
+            <table class="side-table">
+                <tr>
+                    <td><span class="week_total">55h<!-- 週の合計時間を入れたい --></span></td>
+                    <td><span class="week_total"><!-- 週の合計時間を入れたい --></span></td>
+                    <td><span class="week_total"><!-- 週の合計時間を入れたい --></span></td>
+                    <td><span class="week_total"><!-- 週の合計時間を入れたい --></span></td>
+                    <td><span class="week_total"><!-- 週の合計時間を入れたい --></span></td>
+                </tr>
+            </table>
+        </div>
+        
         
     </div>
 </body>
