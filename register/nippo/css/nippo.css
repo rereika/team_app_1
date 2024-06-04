@@ -1,0 +1,91 @@
+/* style.css */
+
+.new-tag {
+  display: none;
+  margin-top: 5px;
+  width: 100%;
+}
+
+#deleteButton {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 auto;
+  width: fit-content;
+  position: relative;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* テキストと次の要素の間にスペースを配置 */
+  margin: 20px auto;
+}
+
+ul li>*:first-child {
+  margin-left: 30px;
+}
+
+.btn-outline-primary {
+  position: absolute;
+}
+
+.btn-outline-primary.list-button {
+  top: 15px;
+  /* ulの少し上に配置 */
+  left: 300px;
+  /* ulの少し左に配置 */
+}
+
+.btn-outline-primary.register-button {
+  bottom: 150px;
+  /* ulの少し下に配置 */
+  right: 400px;
+  /* ulの少し右に配置 */
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.tag-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#tagSelect {
+  width: 100px;
+  height: 50px;
+  text-align-last: center;
+}
+
+.score-item {
+  display: flex;
+  align-items: center;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* 各ラジオボタンの間に空白を追加 */
+  margin-left: 10px;
+}
+
+.score div {
+  display: flex;
+  align-items: center;
+}
+
+li .score div label {
+  margin-left: 5px;
+  /* ラジオボタンとラベルの間の余白 */
+}
