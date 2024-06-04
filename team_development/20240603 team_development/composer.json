@@ -1,6 +1,0 @@
-{
-    "require": {
-        "twbs/bootstrap": "5.3.0",
-        "scssphp/scssphp": "^1.12"
-    }
-}
