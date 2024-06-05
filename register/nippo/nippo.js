@@ -47,3 +47,8 @@ newOptionInput.addEventListener('keydown', function (event) {
     }
   }
 });
+
+// 「一覧へ」ボタンのクリックイベントリスナーを追加
+document.querySelector('.list-button').addEventListener('click', function() {
+  window.location.href = 'calendar.html'; // カレンダーのHTMLファイルへのパスを指定
+});
