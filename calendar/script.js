@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createCalendar();
   });
 
-  // createCalendar();
+  createCalendar();
 
   // モーダルウィンドウの要素を取得
   const modal = document.getElementById("myModal");
