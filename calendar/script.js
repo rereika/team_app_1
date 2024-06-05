@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const editModalButton = document.getElementById("edit-modal");
 
   // カレンダーの日付セルをクリックしたときの処理
-  document.querySelectorAll(".calendar td[data-date]").forEach(cell => {
+  document.querySelectorAll("tbody td").forEach(cell => {
     cell.addEventListener("click", () => {
       modalDate.textContent = `${cell.firstElementChild.textContent}日`;
 
