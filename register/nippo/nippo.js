@@ -47,3 +47,13 @@ newOptionInput.addEventListener('keydown', function (event) {
     }
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // ボタン要素を取得
+  const registerButton = document.querySelector(".register-button");
+
+  // ボタンがクリックされたときの処理
+  registerButton.addEventListener("click", function () {
+    alert("日報を登録しました。今日もお疲れ様！");
+  });
+});
