@@ -25,8 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // カレンダーの日付セルをクリックしたときの処理
   document.querySelectorAll(".calendar td[data-date]").forEach(cell => {
     cell.addEventListener("click", () => {
-      const date = cell.dataset.date;
-      modalDate.textContent = `${date}日`;
+      modalDate.textContent = `${cell.firstElementChild.textContent}日`;
 
       // データベースからデータを取得して表示
       modalStudyTime.textContent = "";
