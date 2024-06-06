@@ -2,8 +2,8 @@
 
 $host = 'localhost';
 $db = 'calendar_app';
-$user = '';
-$pass = '';
+$user = 'tomo';
+$pass = 'ayomot7001';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

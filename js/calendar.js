@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return data;
     } catch (err) {
       console.log('失敗');
+      console.log(err);
     }
   }
 
@@ -93,12 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // 左上の月表示
   function renderMonth() {
     const title = month + 1;
-    document.querySelector('.goal-time-container span').textContent = title + '月';
+    document.querySelector('.goal-time-container span').textContent = `${title}月`;
   }
 
   // カレンダーを行(週)ごとに作成、ここがメイン
   async function renderWeeks() {
-    // console.log(jsonData);
     const dates = [
       ...getCalendarHead(),
       ...getCalendarBody(),
@@ -121,14 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
         span.classList.add('date-number');
         span.textContent = date.date;
         td.appendChild(span);
-        getTags(date, jsonData, td); // タグ情報の取得
+        getTags(date, jsonData, td); // タグ情報の表示
         addColor(date, jsonData, td); // 背景色の設定
         // はみ出ている前月分と来月分の数字を薄くする
         if (date.isDisabled) {
           span.classList.add('disabled');
         }
         tr.appendChild(td);
-        addMWEvent();
+        addMWEvent(date, jsonData, td); // MWのクリックイベントとリンクの動的生成とデータ表示
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
@@ -181,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       td.style.background = 'transparent';
     }
-
   }
 
   function createCalendar() {
@@ -225,32 +224,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const editModalButton = document.getElementById("edit-modal");
 
   // カレンダーの日付セルをクリックしたときの処理
-  function addMWEvent() {
-    document.querySelectorAll(".calendar tbody td").forEach(cell => {
-      cell.addEventListener("click", () => {
-        modalDate.textContent = `${cell.firstElementChild.textContent}日`;
-
-        // データベースからデータを取得して表示
+  function addMWEvent(date, jsonData, td) {
+    td.addEventListener("click", () => {
+      modalDate.textContent = `${td.firstElementChild.textContent}日`;
+      const infoMW = jsonData[0].filter(data => {
+        return date.uniqueDate === data.day;
+      });
+      console.log(date.uniqueDate);
+      // データベースからデータを取得して表示
+      if (infoMW.length > 0) {
+        modalStudyTime.textContent = `${infoMW[0].hour}時間`;
+        modalGoodPoints.textContent = infoMW[0].good;
+        modalImprovePoints.textContent = infoMW[0].more;
+        modalCommitment.textContent = infoMW[0].tomorrow;
+      } else {
         modalStudyTime.textContent = "";
         modalGoodPoints.textContent = "";
         modalImprovePoints.textContent = "";
         modalCommitment.textContent = "";
+      }
 
-        // モーダルを表示
-        modal.showModal();
-      });
+      // モーダルを表示
+      modal.showModal();
+      // 編集ボタンの処理（編集画面への遷移）
+      editModalButton.onclick = () => {
+        // 編集画面への遷移処理をここに記述
+        window.location.href = `register.php?${date.uniqueDate}`; // 編集画面へのURLに置き換える
+      };
     });
   }
 
   // モーダルを閉じる処理
   closeModalButton.onclick = () => {
     modal.close();
-  };
-
-  // 編集ボタンの処理（編集画面への遷移）
-  editModalButton.onclick = () => {
-    // 編集画面への遷移処理をここに記述
-    window.location.href = "register.html"; // 編集画面へのURLに置き換える
   };
 
   // モーダルの外側をクリックしたときにモーダルを閉じる
