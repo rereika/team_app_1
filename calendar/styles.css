@@ -88,6 +88,18 @@ input {
     overflow: hidden; /* テキストが溢れた場合非表示に */
 }
 
+.calendar td {
+    overflow: hidden;
+    transition: opacity 0.3s ease; /* アニメーション効果を追加 */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 影の設定 */
+}
+
+.calendar td:hover {
+    opacity: 0.7; /* ホバー時の透明度 */
+    cursor: pointer;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* ホバー時の影の設定 */
+}
+
 .date-number {
     position: absolute;
     top: 5px;
@@ -187,4 +199,3 @@ input {
     justify-content: center; /* 水平方向の中央揃え */
     height: 100%; /* 親要素の高さを満たす */
 }
-
