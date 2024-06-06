@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 編集ボタンの処理（編集画面への遷移）
   editModalButton.onclick = () => {
     // 編集画面への遷移処理をここに記述
-    window.location.href = "nippo.html"; // 編集画面へのURLに置き換える
+    window.location.href = "register.html"; // 編集画面へのURLに置き換える
   };
 
   // モーダルの外側をクリックしたときにモーダルを閉じる
