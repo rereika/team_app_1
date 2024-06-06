@@ -122,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
           span.classList.add('disabled');
         }
         tr.appendChild(td);
-        addMWEvent(); // モーダルウィンドウを表示するイベントを生成
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
@@ -132,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearCalendar();
     renderMonth();
     renderWeeks();
+    addMWEvent();
   }
 
   createCalendar();
