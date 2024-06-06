@@ -2,6 +2,7 @@
 
 require('connectDB.php');
 
+// この配列はJSでインデックス番号を使って操作するので新規データは末尾に追加するように
 $results = [];
 
 $sql1 = "SELECT * FROM reports";
@@ -21,6 +22,9 @@ $sql3 = "SELECT * FROM tags";
 $stmt = $pdo->query($sql3);
 $results[] = $stmt->fetchAll();
 
-echo json_encode($results);
+$sql4 = "SELECT hour, day
+           FROM reports";
+$stmt = $pdo->query($sql4);
+$results[] = $stmt->fetchAll();
 
-?>
+echo json_encode($results);

@@ -24,6 +24,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // 月の合計時間を取得・表示
+  async function renderTotalTimePerMonth() {
+    const jsonData = await getData();
+    const times = jsonData[3].filter(d => {
+      // ↓の地獄みたいなコードは不適切なので、だれか直してください
+      return d.day >= `${year}-${String(month + 1).padStart(2, '0')}-${String(new Date(year, month + 1, 1).getDate()).padStart(2, '0')}` &&
+        d.day <= `${year}-${ String(month + 1).padStart(2, '0') }-${ String(new Date(year, month + 2, 0).getDate()).padStart(2, '0') }`;
+    });
+    let num = 0;
+    times.forEach((time) => {
+      num += time.hour;
+    });
+    document.querySelector('.time .totalTime').textContent = `合計時間: ${num}h`;
+  }
+
+  renderTotalTimePerMonth();
+
+
+
   // ここからカレンダー自動生成
   // 現在日時の情報を取得
   const today = new Date();
@@ -121,19 +140,20 @@ document.addEventListener("DOMContentLoaded", () => {
         span.classList.add('date-number');
         span.textContent = date.date;
         td.appendChild(span);
-        getTags(date, jsonData, td); // タグ情報の表示
-        addColor(date, jsonData, td); // 背景色の設定
+        getTags(date, jsonData, td);
+        addColor(date, jsonData, td);
         // はみ出ている前月分と来月分の数字を薄くする
         if (date.isDisabled) {
           span.classList.add('disabled');
         }
         tr.appendChild(td);
-        addMWEvent(date, jsonData, td); // MWのクリックイベントとリンクの動的生成とデータ表示
+        addMWEvent(date, jsonData, td);
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
   }
 
+  // タグ情報の表示
   function getTags(date, jsonData, td) {
     const tags = jsonData[1].filter(data => {
       return date.uniqueDate === data.day;
@@ -150,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // 背景色の設定
   function addColor(date, jsonData, td) {
     // 今日をオレンジにする
     if (date.isToday) {
@@ -199,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
       month = 11;
     }
     createCalendar();
+    renderTotalTimePerMonth();
   });
 
   document.querySelector('#next').addEventListener('click', () => {
@@ -208,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
       month = 0;
     }
     createCalendar();
+    renderTotalTimePerMonth();
   });
 
 
@@ -223,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModalButton = document.getElementById("close-modal");
   const editModalButton = document.getElementById("edit-modal");
 
-  // カレンダーの日付セルをクリックしたときの処理
+  // MWのクリックイベントとリンクの動的生成とデータ表示
   function addMWEvent(date, jsonData, td) {
     td.addEventListener("click", () => {
       modalDate.textContent = `${td.firstElementChild.textContent}日`;
