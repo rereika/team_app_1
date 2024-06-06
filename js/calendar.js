@@ -12,7 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("monthlyGoal", goalInput.value);
   });
 
+  async function getData() {
+    try {
+      const response = await fetch('../getData.php');
+      const data = await response.json();
+      console.log(data);
+      // return data;
+    } catch (err) {
+      console.log('失敗');
+    }
+  }
 
+  getData();
 
   // ここからカレンダー自動生成
   // 現在日時の情報を取得
@@ -31,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         date: d - i,
         isToday: false,
         isDisabled: true,
+        uniqueDate: `${year}-${String(month).padStart(2, '0')}-${String(d - i).padStart(2, '0')}`
       });
     }
     return dates;
@@ -46,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         date: i,
         isToday: false,
         isDisabled: false,
+        uniqueDate: `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
       });
     }
 
@@ -64,7 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
       dates.push({
         date: i,
         isToday: false,
-        isDisabled: true
+        isDisabled: true,
+        uniqueDate: `${year}-${String(month + 2).padStart(2, '0')}-${String(i).padStart(2, '0')}`
       });
     }
     return dates;
