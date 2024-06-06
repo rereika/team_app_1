@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const goalInput = document.getElementById("goal-input");
-
   // ローカルストレージから目標を読み込む
   const savedGoal = localStorage.getItem("monthlyGoal");
   if (savedGoal) {
@@ -114,35 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
     weeks.forEach((week) => {
       const tr = document.createElement('tr');
       week.forEach(async (date) => {
+        // データ取得
         const jsonData = await getData();
-        // console.log(jsonData[1]);
+        // 各日付の枠組みを生成
         const td = document.createElement(('td'));
         const span = document.createElement('span');
         span.classList.add('date-number');
         span.textContent = date.date;
         td.appendChild(span);
-        // タグ情報取得、今はダミーデータを入れています(重複あり)
-        const tags = jsonData[1].filter(data => {
-          return date.uniqueDate === data.day;
-        });
-        const array = [];
-        tags.forEach(tag => {
-          array.push(tag.tag_name);
-        });
-        for (let i = 0; i < 4; i++) {
-          const div = document.createElement('div');
-          div.classList.add('event');
-          div.textContent = array[i];
-          td.appendChild(div);
-        }
-
-        // 背景色を設定
-        // addColor();
-
-        // 今日をオレンジにする
-        if (date.isToday) {
-          td.classList.add('today');
-        }
+        getTags(date, jsonData, td); // タグ情報の取得
+        addColor(date, jsonData, td); // 背景色の設定
         // はみ出ている前月分と来月分の数字を薄くする
         if (date.isDisabled) {
           span.classList.add('disabled');
@@ -154,7 +134,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function addColor() {
+  function getTags(date, jsonData, td) {
+    const tags = jsonData[1].filter(data => {
+      return date.uniqueDate === data.day;
+    });
+    const array = [];
+    tags.forEach(tag => {
+      array.push(tag.tag_name);
+    });
+    for (let i = 0; i < 4; i++) {
+      const div = document.createElement('div');
+      div.classList.add('event');
+      div.textContent = array[i];
+      td.appendChild(div);
+    }
+  }
+
+  function addColor(date, jsonData, td) {
+    // 今日をオレンジにする
+    if (date.isToday) {
+      td.classList.add('today');
+    }
+    // 自己評価に応じて背景色を設定
+    const rating = jsonData[0].filter(data => {
+      return date.uniqueDate === data.day;
+    });
+    if (rating.length > 0) {
+      td.classList.remove('today');
+      switch (rating[0].rate) {
+        case 1:
+          td.style.background = '#ffc';
+          break;
+        case 2:
+          td.style.background = '#ff9';
+          break;
+        case 3:
+          td.style.background = '#ff6';
+          break;
+        case 4:
+          td.style.background = '#ff3';
+          break;
+        case 5:
+          td.style.background = '#ff0';
+          break;
+      }
+    } else {
+      td.style.background = 'transparent';
+    }
 
   }
 
