@@ -12,18 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("monthlyGoal", goalInput.value);
   });
 
+  // PHPからデータを取得
   async function getData() {
     try {
       const response = await fetch('../getData.php');
       const data = await response.json();
-      console.log(data);
-      // return data;
+      // console.log(data);
+      return data;
     } catch (err) {
       console.log('失敗');
     }
   }
-
-  getData();
 
   // ここからカレンダー自動生成
   // 現在日時の情報を取得
@@ -99,7 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // カレンダーを行(週)ごとに作成、ここがメイン
-  function renderWeeks() {
+  async function renderWeeks() {
+    // console.log(jsonData);
     const dates = [
       ...getCalendarHead(),
       ...getCalendarBody(),
@@ -113,20 +113,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     weeks.forEach((week) => {
       const tr = document.createElement('tr');
-      week.forEach((date) => {
+      week.forEach(async (date) => {
+        const jsonData = await getData();
+        // console.log(jsonData[1]);
         const td = document.createElement(('td'));
         const span = document.createElement('span');
         span.classList.add('date-number');
         span.textContent = date.date;
         td.appendChild(span);
         // タグ情報取得、今はダミーデータを入れています(重複あり)
-        const testArray = ['JS', 'PHP', 'SQL', 'HTML', 'CSS', 'Laravel', 'オリプロ', 'チーム会', '記事'];
+        const tags = jsonData[1].filter(data => {
+          return date.uniqueDate === data.day;
+        });
+        const array = [];
+        tags.forEach(tag => {
+          array.push(tag.tag_name);
+        });
         for (let i = 0; i < 4; i++) {
           const div = document.createElement('div');
           div.classList.add('event');
-          div.textContent = testArray[Math.floor(Math.random() * testArray.length)];
+          div.textContent = array[i];
           td.appendChild(div);
         }
+
+        // 背景色を設定
+        // addColor();
+
         // 今日をオレンジにする
         if (date.isToday) {
           td.classList.add('today');
@@ -136,16 +148,20 @@ document.addEventListener("DOMContentLoaded", () => {
           span.classList.add('disabled');
         }
         tr.appendChild(td);
+        addMWEvent();
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
+  }
+
+  function addColor() {
+
   }
 
   function createCalendar() {
     clearCalendar();
     renderMonth();
     renderWeeks();
-    addMWEvent();
   }
 
   createCalendar();
@@ -208,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 編集ボタンの処理（編集画面への遷移）
   editModalButton.onclick = () => {
     // 編集画面への遷移処理をここに記述
-    window.location.href = "nippo.html"; // 編集画面へのURLに置き換える
+    window.location.href = "register.html"; // 編集画面へのURLに置き換える
   };
 
   // モーダルの外側をクリックしたときにモーダルを閉じる
