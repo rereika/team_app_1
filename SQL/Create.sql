@@ -1,3 +1,5 @@
+CREATE DATABASE calendar_app;
+
 CREATE TABLE tags (
   PRIMARY KEY (id),
   id       INT         NOT NULL AUTO_INCREMENT,
