@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登録</title>
+  <link rel="stylesheet" type="text/css" href="css/nippo.css">
+  <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.css">
+</head>
+
+<body>
+  <header>
+    <button type="button" class="btn btn-outline-primary list-button">一覧へ</button>
+  </header>
+
+  <div class="inner">
+    <ul>
+      <li>学習時間
+        <select id="study time"></select>
+      </li>
+
+      <li class="tag-item">タグ
+        <form id="tagForm" action="/submit" method="post">
+          <div class="select-container">
+            <select id="tagSelect" name="tag" multiple>
+              <option value="new">+</option>
+            </select>
+            <input type="text" id="newTag" class="new-tag" placeholder="新しいタグを入力">
+          </div>
+        </form>
+      </li>
+
+      <li>内容<textarea></textarea></li>
+
+      <li>良かった点<textarea></textarea></li>
+
+      <li>もっと良くできる点<textarea></textarea></li>
+
+      <li>明日への決意<textarea></textarea></li>
+
+      <li>自己評価
+        <div class="score">
+          <div>
+            <input type="radio" id="score0" name="score">
+            <label for="score0">0</label>
+          </div>
+          <div>
+            <input type="radio" id="score20" name="score">
+            <label for="score20">20</label>
+          </div>
+          <div>
+            <input type="radio" id="score40" name="score">
+            <label for="score40">40</label>
+          </div>
+          <div>
+            <input type="radio" id="score60" name="score">
+            <label for="score60">60</label>
+          </div>
+          <div>
+            <input type="radio" id="score80" name="score">
+            <label for="score80">80</label>
+          </div>
+          <div>
+            <input type="radio" id="score100" name="score">
+            <label for="score100">100</label>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <footer>
+    <button type="button" class="btn btn-outline-primary register-button">登録</button>
+  </footer>
+  <script src="nippo.js"></script>
+</body>
+
+</html>
