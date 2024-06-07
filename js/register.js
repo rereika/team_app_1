@@ -1,12 +1,12 @@
 
 
-const select = document.getElementById('study time');
-for (let i = 1; i <= 24; i++) {
-  const option = document.createElement('option');
-  option.value = i;
-  option.textContent = i;
-  select.appendChild(option);
-}
+// const select = document.getElementById('study time');
+// for (let i = 1; i <= 24; i++) {
+//   const option = document.createElement('option');
+//   option.value = i;
+//   option.textContent = i;
+//   select.appendChild(option);
+// }
 
 const tagSelect = document.getElementById('tagSelect');
 const newOptionInput = document.getElementById('newTag');
