@@ -59,9 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         date: d - i,
         isToday: false,
         isDisabled: true,
-
         uniqueDate: `${year}-${String(month).padStart(2, '0')}-${String(d - i).padStart(2, '0')}`
-
       });
     }
     return dates;
@@ -77,9 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         date: i,
         isToday: false,
         isDisabled: false,
-
         uniqueDate: `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
-
       });
     }
 
@@ -98,10 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
       dates.push({
         date: i,
         isToday: false,
-
         isDisabled: true,
         uniqueDate: `${year}-${String(month + 2).padStart(2, '0')}-${String(i).padStart(2, '0')}`
-
       });
     }
     return dates;
@@ -118,13 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // 左上の月表示
   function renderMonth() {
     const title = month + 1;
-
     document.querySelector('.goal-time-container span').textContent = `${title}月`;
   }
 
   // カレンダーを行(週)ごとに作成、ここがメイン
   async function renderWeeks() {
-
     const dates = [
       ...getCalendarHead(),
       ...getCalendarBody(),
@@ -150,20 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
         span.textContent = date.date;
         td.appendChild(span);
 
-        // タグ情報取得、今はダミーデータを入れています(重複あり)
-//         const testArray = ['JS', 'PHP', 'SQL', 'HTML', 'CSS', 'Laravel', 'オリプロ', 'チーム会', '記事'];
-//         for (let i = 0; i < 4; i++) {
-//           const div = document.createElement('div');
-//           div.classList.add('event');
-//           div.textContent = testArray[Math.floor(Math.random() * testArray.length)];
-//           td.appendChild(div);
-//         }
-        
-        // 今日をオレンジにする
-        if (date.isToday) {
-          td.classList.add('today');
-        }
-
         getTags(date, jsonData, td);
         addColor(date, jsonData, td);
 
@@ -174,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         tr.appendChild(td);
 
         addMWEvent(date, jsonData, td);
-
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
@@ -213,19 +190,19 @@ document.addEventListener("DOMContentLoaded", () => {
       td.classList.remove('today');
       switch (rating[0].rate) {
         case 1:
-          td.style.background = '#ffc';
+          td.style.background = '#eaffea';
           break;
         case 2:
-          td.style.background = '#ff9';
+          td.style.background = '#aaffaa';
           break;
         case 3:
-          td.style.background = '#ff6';
+          td.style.background = '#55ff55';
           break;
         case 4:
-          td.style.background = '#ff3';
+          td.style.background = '#00d500';
           break;
         case 5:
-          td.style.background = '#ff0';
+          td.style.background = '#008000';
           break;
       }
     } else {
@@ -267,12 +244,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.querySelector('.calendar tbody');
     const weekRows = tbody.querySelectorAll('tr').length;
     const sideTable = document.querySelector('.side-table tbody');
-  
+
     // 現在の合計時間枠をクリア
     while (sideTable.firstChild) {
       sideTable.removeChild(sideTable.firstChild);
     }
-  
+
     // 必要な数だけ週合計の枠を追加
     for (let i = 0; i < weekRows; i++) {
       const tr = document.createElement('tr');
@@ -284,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sideTable.appendChild(tr);
     }
   }
-  
+
 
 
 
@@ -333,12 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // モーダルを閉じる処理
   closeModalButton.onclick = () => {
     modal.close();
-  };
-
-  // 編集ボタンの処理（編集画面への遷移）
-  editModalButton.onclick = () => {
-    // 編集画面への遷移処理をここに記述
-    window.location.href = "register.html"; // 編集画面へのURLに置き換える
   };
 
   // モーダルの外側をクリックしたときにモーダルを閉じる
