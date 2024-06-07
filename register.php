@@ -4,19 +4,123 @@ require('connectDB.php');
 
 $date = $_SERVER['QUERY_STRING'];
 
+$stmt = $pdo->prepare("SELECT t.tag_name
+                         FROM tags AS t
+                    LEFT JOIN report_tags AS rt
+                           ON t.id = rt.tags_id
+                    LEFT JOIN reports AS r
+                           ON rt.report_day = r.day
+                        WHERE r.day = ?");
+$stmt->execute([$date]);
+$selectedTagsB = $stmt->fetchAll();
+
 $stmt = $pdo->prepare("SELECT hour, rate, studies, good, more, tomorrow FROM reports WHERE day = ?");
 $stmt->execute([$date]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$hour = $row['hour'];
-$rate = $row['rate'];
-$studies = $row['studies'];
-$good = $row['good'];
-$more = $row['more'];
-$tomorrow = $row['tomorrow'];
+// BはBefore(初期値)のB
+$hourB = $row['hour'];
+$rateB = $row['rate'];
+// rateのみバリデーションが必要、他のNOT NULLカラムはほとんど初期値がある
+$rateB = $rateB !== NULL ? $row['rate'] : 1;
+$studiesB = $row['studies'];
+$goodB = $row['good'];
+$moreB = $row['more'];
+$tomorrowB = $row['tomorrow'];
 
 $stmt = $pdo->query("SELECT tag_name FROM tags");
-$tags = $stmt->fetchAll();
+$storedTags = $stmt->fetchAll();
+
+// ↓これは何用なのか全く覚えていないため、しばらくバグが見つからなければ削除
+// $stmt = $pdo->prepare("SELECT id FROM reports WHERE day = ?");
+// $stmt->execute([$date]);
+// $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $action = filter_input(INPUT_GET, 'action');
+  switch ($action) {
+    case 'upOrIn':
+      upOrIn($pdo);
+      break;
+    case 'add-tag':
+      addTag();
+      break;
+  }
+
+  header('Location: http://localhost:8000/calendar.html?' . $date);
+  exit;
+}
+
+// upOrIn→update or insert
+function upOrIn($pdo)
+{
+  // AはAfter(入力後)のA
+  $selectedTagsA = filter_input(INPUT_POST, 'tags', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+  $hourA = filter_input(INPUT_POST, 'hour');
+  $rateA = filter_input(INPUT_POST, 'rate');
+  $studiesA = filter_input(INPUT_POST, 'studies');
+  $goodA = filter_input(INPUT_POST, 'good');
+  $moreA = filter_input(INPUT_POST, 'more');
+  $tomorrowA = filter_input(INPUT_POST, 'tomorrow');
+  $date = filter_input(INPUT_POST, 'date');
+
+  // 選択したタグのタグ名をタグidに変換(テーブルの構成上必要)
+  $selectedTagIds = [];
+  foreach ($selectedTagsA as $selectedTagA) {
+    $stmt = $pdo->prepare("SELECT id FROM tags WHERE tag_name = :selectedTag");
+    $stmt->execute(['selectedTag' => $selectedTagA]);
+    $selectedTagIds[] = $stmt->fetchColumn();
+  }
+
+  // 日付に合致するレコードがあるかを調べ、なければINSERT、あればUPDATE
+  $stmt = $pdo->prepare("SELECT day FROM reports WHERE day = ?");
+  $stmt->execute([$date]);
+  $check = $stmt->fetchColumn();
+
+  if ($check === false) {
+    $stmt = $pdo->prepare("INSERT INTO reports VALUES (0, :hour, :rate, :studies, :good, :more, :tomorrow, :date)");
+    $stmt->execute([
+      'hour' => $hourA,
+      'rate' => $rateA,
+      'studies' => $studiesA,
+      'good' => $goodA,
+      'more' => $moreA,
+      'tomorrow' => $tomorrowA,
+      'date' => $date
+    ]);
+
+    // これを後にしないと外部キー制約の関係でエラーになる
+    foreach ($selectedTagIds as $selectedTagId) {
+      $stmt = $pdo->prepare("INSERT INTO report_tags (report_day, tags_id) VALUES (:date, :selectedTagId)");
+      $stmt->execute(['date' => $date, 'selectedTagId' => $selectedTagId]);
+    }
+
+    return;
+  }
+  $stmt = $pdo->prepare("UPDATE reports SET hour = :hour, rate = :rate, studies = :studies, good = :good, more = :more, tomorrow = :tomorrow WHERE day = :date");
+  $stmt->execute([
+    'hour' => $hourA,
+    'rate' => $rateA,
+    'studies' => $studiesA,
+    'good' => $goodA,
+    'more' => $moreA,
+    'tomorrow' => $tomorrowA,
+    'date' => $date
+  ]);
+
+  $stmt = $pdo->prepare("DELETE FROM report_tags WHERE report_day = :date");
+  $stmt->execute(['date' => $date]);
+
+  foreach ($selectedTagIds as $selectedTagId) {
+    $stmt = $pdo->prepare("INSERT INTO report_tags (report_day, tags_id) VALUES (:date, :selectedTagId)");
+    $stmt->execute(['date' => $date, 'selectedTagId' => $selectedTagId]);
+  }
+}
+
+function addTag()
+{
+  return;
+}
 
 ?>
 <!DOCTYPE html>
@@ -37,73 +141,70 @@ $tags = $stmt->fetchAll();
   </header>
 
   <div class="inner">
-    <form class="tag-item">
-      タグ
-      <div class="select-container">
-        <select id="tagSelect" name="tag" multiple>
-          <?php foreach ($tags as $tag) : ?>
-            <option value="<?= $tag['tag_name']; ?>"><?= $tag['tag_name']; ?></option>
-          <?php endforeach; ?>
-          <option value="new">+</option>
-        </select>
-        <input type="text" id="newTag" class="new-tag" placeholder="新しいタグを入力">
-      </div>
-    </form>
+    <form action="?action=upOrIn" method="post">
 
-    <form>
+      <input type="hidden" name="date" value="<?= $date; ?>">
       <ul>
         <li>学習時間
-          <select id="study time">
+          <select id="study time" name="hour">
             <!-- PHPで生成した方がselected属性を簡単につけられる -->
             <?php for ($i = 1; $i <= 24; $i++) : ?>
-              <option value="" <?= $i === $hour ? "selected" : '' ?>><?= $i; ?></option>
+              <option value="<?= $i; ?>" <?= $i === $hourB ? "selected" : ''; ?>><?= $i; ?></option>
             <?php endfor; ?>
           </select>
         </li>
 
-        <li>内容<textarea><?= $studies !== '' ? $studies : ''; ?></textarea></li>
+        <li class="tag-item">タグ
+          <div class="select-container">
+            <select id="tagSelect" name="tags[]" multiple>
+              <?php foreach ($storedTags as $tag) : ?>
+                <option value="<?= $tag['tag_name']; ?>" <?= in_array($tag, $selectedTagsB) ? 'selected' : '' ?>><?= $tag['tag_name']; ?></option>
+              <?php endforeach; ?>
+              <option value="new">+</option>
+            </select>
+            <input type="text" id="newTag" class="new-tag" placeholder="新しいタグを入力">
+          </div>
+        </li>
 
-        <li>良かった点<textarea><?= $good !== '' ? $good : ''; ?></textarea></li>
+        <li>
+          内容
+          <textarea name="studies"><?= $studiesB !== '' ? $studiesB : ''; ?></textarea>
+        </li>
 
-        <li>もっと良くできる点<textarea><?= $more !== '' ? $more : ''; ?></textarea></li>
+        <li>
+          良かった点
+          <textarea name="good"><?= $goodB !== '' ? $goodB : ''; ?></textarea>
+        </li>
 
-        <li>明日への決意<textarea><?= $tomorrow !== '' ? $tomorrow : ''; ?></textarea></li>
+        <li>
+          もっと良くできる点
+          <textarea name="more"><?= $moreB !== '' ? $moreB : ''; ?></textarea>
+        </li>
+
+        <li>
+          明日への決意
+          <textarea name="tomorrow"><?= $tomorrowB !== '' ? $tomorrowB : ''; ?></textarea>
+        </li>
 
         <li>自己評価
           <div class="score">
-            <div>
-              <input type="radio" id="score0" name="score" <?= $rate === 1 ? "checked" : " " ?>>
-              <label for="score0">0</label>
-            </div>
-            <div>
-              <input type="radio" id="score20" name="score" <?= $rate === 2 ? "checked" : " " ?>>
-              <label for="score20">20</label>
-            </div>
-            <div>
-              <input type="radio" id="score40" name="score" <?= $rate === 3 ? "checked" : " " ?>>
-              <label for="score40">40</label>
-            </div>
-            <div>
-              <input type="radio" id="score60" name="score" <?= $rate === 4 ? "checked" : " " ?>>
-              <label for="score60">60</label>
-            </div>
-            <div>
-              <input type="radio" id="score80" name="score" <?= $rate === 5 ? "checked" : " " ?>>
-              <label for="score80">80</label>
-            </div>
-            <div>
-              <input type="radio" id="score100" name="score" <?= $rate === 6 ? "checked" : " " ?>>
-              <label for="score100">100</label>
-            </div>
+            <?php for ($i = 1; $i <= 5; $i++) : ?>
+              <div>
+                <input type="radio" id="<?= 'rate' . $i ?>" name="rate" value="<?= $i; ?>" <?= $rateB === $i ? "checked" : " "; ?>>
+                <label for="<?= 'rate' . $i ?>"><?= $i; ?></label>
+              </div>
+            <?php endfor; ?>
           </div>
         </li>
       </ul>
+      <button type="submit" class="btn btn-outline-primary register-button">登録</button>
     </form>
   </div>
 
-  <footer>
-    <button type="button" class="btn btn-outline-primary register-button">登録</button>
-  </footer>
+  <!-- 基本的にボタンはformの中にいれなければならない -->
+  <!-- <footer>
+    <button type="submit" class="btn btn-outline-primary register-button">登録</button>
+  </footer> -->
   <script src="js/register.js"></script>
 </body>
 

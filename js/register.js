@@ -1,5 +1,5 @@
 
-
+// PHPで生成しました
 // const select = document.getElementById('study time');
 // for (let i = 1; i <= 24; i++) {
 //   const option = document.createElement('option');

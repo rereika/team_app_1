@@ -12,7 +12,7 @@ $results[] = $stmt->fetchAll();
 $sql2 = "SELECT r.day, t.tag_name
            FROM reports AS r
            LEFT JOIN report_tags AS rt
-             ON r.id = rt.reports_id
+             ON r.day = rt.report_day
            LEFT JOIN tags AS t
              ON rt.tags_id = t.id";
 $stmt = $pdo->query($sql2);
