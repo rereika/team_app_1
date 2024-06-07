@@ -12,13 +12,13 @@
 
 header {
   width: 700px;
-  margin: 20px auto;
+  margin: 30px auto;
   text-align: left;
 }
 
 .inner {
   width: 1000px;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 ul {
@@ -45,7 +45,7 @@ ul li>*:first-child {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  width: 150px;
 }
 
 .tag-item {
@@ -54,10 +54,25 @@ ul li>*:first-child {
   align-items: center;
 }
 
+.tagForm {
+  text-align: right;
+  width: 300px;
+}
+
 #tagSelect {
+  display: block;
+  /* ブロック要素として表示 */
+  margin-left: auto;
+  /* 左マージンを自動にして右寄せ */
+  margin-right: 0;
   width: 100px;
   height: 50px;
   text-align-last: center;
+}
+
+textarea {
+  width: 300px;
+  height: 80px;
 }
 
 .score-item {
@@ -85,6 +100,6 @@ li .score div label {
 
 footer {
   width: 700px;
-  margin: 20px auto;
+  margin: 30px auto;
   text-align: right;
 }

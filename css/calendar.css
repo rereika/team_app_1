@@ -3,63 +3,52 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* 以下ヘッダー部分 */
-.month {
-    margin-right: 10px;
-}
-
-.container {
-    width: 100%;
-    display: flex;
-    flex-direction: row-reverse;; /* 横並びに設定 */
-}
-
 .goal-time-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    justify-content: center;
+    width: 1190px;
+    margin: 40px auto;
 }
 
-.goal, .time {
-    border: 1px solid black;
-    text-align: center;
-}
-
-.time {
-    width: 20%;
-    background-color: aqua;
-    padding: 2px;
-}
-
-.goal {
-    width: 60%; /* goalと合計で80%になるよう調整 */
-    background-color: lightyellow;
-}
-
-.goal td, .time td {
-    font-size: 30px;
-    height: 120px; /* セルの高さ*/
-    text-align: center; /* テキストを中央揃え */
-    vertical-align: middle; /* 垂直方向の中央揃え */
-}
-
-
-
-.h1 {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
+h1 {
+    width: 180px;
 }
 
 h1 a {
     text-decoration: none;
-    color: black;
+    color: rgb(176, 175, 175);
+    font-size: 40px;
+}
+
+h1 span {
+    margin: 0 14px;
+    /* 6月と<>の間に空白を入れる */
+}
+
+.time {
+    width: 200px;
+    background-color: aqua;
+    padding: 2px;
+    border: 1px solid black;
+}
+
+.goal {
+    width: 680px;
+    background-color: lightyellow;
+}
+
+.goal td,
+.time td {
     font-size: 30px;
+    height: 120px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.container {
+    width: 1190px;
+    margin: 40px auto;
+    flex-direction: row-reverse;
+    /* 横並びに設定 */
+    gap: 40px;
 }
 
 input {
@@ -68,28 +57,23 @@ input {
     width: 90%;
 }
 
-
 /* カレンダー部分 */
 .calendar {
-    width: 75%; /* カレンダーの幅を75%に設定 */
-    border-collapse: collapse;
-    margin-right: 75px;
+    width: 1000px;
 }
 
-.calendar th, .calendar td {
+.calendar th {
     border: 1px solid black;
-    text-align: center;
-    height: 100px;
-    position: relative;
-    vertical-align: top;
+    text-align: center; /* テキストを中央揃え */
+    height: 80px; /* 適宜調整してください */
     padding: 5px;
-    width: 14.28%; /* 7列で均等に */
-    box-sizing: border-box; /* パディングを含める */
-    overflow: hidden; /* テキストが溢れた場合非表示に */
+    width: 14.28%;
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 30px;
 }
 
 .calendar td {
-    overflow: hidden;
     transition: opacity 0.3s ease; /* アニメーション効果を追加 */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 影の設定 */
 }
@@ -100,27 +84,26 @@ input {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* ホバー時の影の設定 */
 }
 
-.date-number {
-    position: absolute;
+
     top: 5px;
-    right: 5px;
+    left: 5px;
     font-size: 17px;
     color: black;
+    text-align: left
 }
 
-.calendar th {
-    height: 30px;
-}
 
 .calendar .today {
     background: orange !important;
 }
 
-.calendar th:nth-of-type(1), .calendar td:nth-of-type(1) {
+.calendar th:nth-of-type(1),
+.calendar td:nth-of-type(1) {
     color: red;
 }
 
-.calendar th:nth-of-type(7), .calendar td:nth-of-type(7) {
+.calendar th:nth-of-type(7),
+.calendar td:nth-of-type(7) {
     color: blue;
 }
 
@@ -129,73 +112,49 @@ input {
 }
 
 .event {
-    margin-top: 5px;
+    margin-top: 8px;
     margin-bottom: 5px;
     font-size: 14px;
     color: black;
-    white-space: nowrap; /* テキストを一行に収める */
-    text-overflow: ellipsis; /* 省略記号を表示 */
-    overflow: hidden; /* テキストが溢れた場合非表示に */
-    }
-
-
-
-.main-content {
-    width: 80%;
-}
-
-/* 週合計時間のテーブル */
-.side {
-    width: 20%;
-    margin-right: 5%; /* カレンダーとの間にスペースを追加 */
-    margin-top: 30px;
+    white-space: nowrap;
+    /* テキストを一行に収める */
+    text-overflow: ellipsis;
+    /* 省略記号を表示 */
+    overflow: hidden;
+    /* テキストが溢れた場合非表示に */
 }
 
 .side-table {
-    width: 100%;
+    width: 150px;
     border-collapse: collapse;
-
 }
 
-.side-table th, .side-table td {
+.side-table th,
+.side-table td {
     border: 1px solid black;
     text-align: center;
     height: 100px;
-    position: relative;
-    vertical-align: top;
     padding: 5px;
-    width: 60%;
-    box-sizing: border-box; /* パディングを含める */
-    overflow: hidden; /* テキストが溢れた場合非表示に */
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
     display: block;
-    margin-left: 100px;
-}
-
-
-.side-table th {
-    height: 30px;
-}
-
-.side-table .today {
-    background: orange !important;
-}
-
-.side-table th:nth-of-type(1), .side-table td:nth-of-type(1) {
-    color: red;
-}
-
-.side-table th:nth-of-type(7), .side-table td:nth-of-type(7) {
-    color: blue;
 }
 
 .week_total {
     font-size: 30px;
     color: black;
-    white-space: nowrap; /* テキストを一行に収める */
-    text-overflow: ellipsis; /* 省略記号を表示 */
-    overflow: hidden; /* テキストが溢れた場合非表示に */
-    display: flex; /* フレックスボックスを使用 */
-    align-items: center; /* 縦方向の中央揃え */
-    justify-content: center; /* 水平方向の中央揃え */
-    height: 100%; /* 親要素の高さを満たす */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+input {
+    height: 65px;
+    font-size: 30px;
+    width: 90%;
 }

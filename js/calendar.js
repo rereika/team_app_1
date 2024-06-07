@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const goalInput = document.getElementById("goal-input");
+
   // ローカルストレージから目標を読み込む
   const savedGoal = localStorage.getItem("monthlyGoal");
   if (savedGoal) {
@@ -41,8 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderTotalTimePerMonth();
 
-
-
   // ここからカレンダー自動生成
   // 現在日時の情報を取得
   const today = new Date();
@@ -60,7 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
         date: d - i,
         isToday: false,
         isDisabled: true,
+
         uniqueDate: `${year}-${String(month).padStart(2, '0')}-${String(d - i).padStart(2, '0')}`
+
       });
     }
     return dates;
@@ -76,7 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
         date: i,
         isToday: false,
         isDisabled: false,
+
         uniqueDate: `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
+
       });
     }
 
@@ -95,8 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
       dates.push({
         date: i,
         isToday: false,
+
         isDisabled: true,
         uniqueDate: `${year}-${String(month + 2).padStart(2, '0')}-${String(i).padStart(2, '0')}`
+
       });
     }
     return dates;
@@ -113,11 +118,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // 左上の月表示
   function renderMonth() {
     const title = month + 1;
+
     document.querySelector('.goal-time-container span').textContent = `${title}月`;
   }
 
   // カレンダーを行(週)ごとに作成、ここがメイン
   async function renderWeeks() {
+
     const dates = [
       ...getCalendarHead(),
       ...getCalendarBody(),
@@ -131,23 +138,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     weeks.forEach((week) => {
       const tr = document.createElement('tr');
+
       week.forEach(async (date) => {
         // データ取得
         const jsonData = await getData();
         // 各日付の枠組みを生成
+
         const td = document.createElement(('td'));
         const span = document.createElement('span');
         span.classList.add('date-number');
         span.textContent = date.date;
         td.appendChild(span);
+
+        // タグ情報取得、今はダミーデータを入れています(重複あり)
+//         const testArray = ['JS', 'PHP', 'SQL', 'HTML', 'CSS', 'Laravel', 'オリプロ', 'チーム会', '記事'];
+//         for (let i = 0; i < 4; i++) {
+//           const div = document.createElement('div');
+//           div.classList.add('event');
+//           div.textContent = testArray[Math.floor(Math.random() * testArray.length)];
+//           td.appendChild(div);
+//         }
+        
+        // 今日をオレンジにする
+        if (date.isToday) {
+          td.classList.add('today');
+        }
+
         getTags(date, jsonData, td);
         addColor(date, jsonData, td);
+
         // はみ出ている前月分と来月分の数字を薄くする
         if (date.isDisabled) {
           span.classList.add('disabled');
         }
         tr.appendChild(td);
+
         addMWEvent(date, jsonData, td);
+
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
