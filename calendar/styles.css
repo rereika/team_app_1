@@ -9,7 +9,7 @@ body {
 }
 
 h1 {
-    width: 150px;
+    width: 180px;
 }
 
 h1 a {
@@ -19,7 +19,7 @@ h1 a {
 }
 
 h1 span {
-    margin: 0 14px;
+    margin: 0 12px;
     /* 6月と<>の間に空白を入れる */
 }
 
