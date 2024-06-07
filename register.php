@@ -36,8 +36,21 @@ $tags = $stmt->fetchAll();
     <button type="button" class="btn btn-outline-primary list-button">一覧へ</button>
   </header>
 
-  <form>
-    <div class="inner">
+  <div class="inner">
+    <form class="tag-item">
+      タグ
+      <div class="select-container">
+        <select id="tagSelect" name="tag" multiple>
+          <?php foreach ($tags as $tag) : ?>
+            <option value="<?= $tag['tag_name']; ?>"><?= $tag['tag_name']; ?></option>
+          <?php endforeach; ?>
+          <option value="new">+</option>
+        </select>
+        <input type="text" id="newTag" class="new-tag" placeholder="新しいタグを入力">
+      </div>
+    </form>
+
+    <form>
       <ul>
         <li>学習時間
           <select id="study time">
@@ -46,18 +59,6 @@ $tags = $stmt->fetchAll();
               <option value="" <?= $i === $hour ? "selected" : '' ?>><?= $i; ?></option>
             <?php endfor; ?>
           </select>
-        </li>
-
-        <li class="tag-item">タグ
-          <div class="select-container">
-            <select id="tagSelect" name="tag" multiple>
-              <?php foreach ($tags as $tag) : ?>
-                <option value="<?= $tag['tag_name']; ?>"><?= $tag['tag_name']; ?></option>
-              <?php endforeach; ?>
-              <option value="new">+</option>
-            </select>
-            <input type="text" id="newTag" class="new-tag" placeholder="新しいタグを入力">
-          </div>
         </li>
 
         <li>内容<textarea><?= $studies !== '' ? $studies : ''; ?></textarea></li>
@@ -97,8 +98,8 @@ $tags = $stmt->fetchAll();
           </div>
         </li>
       </ul>
-    </div>
-  </form>
+    </form>
+  </div>
 
   <footer>
     <button type="button" class="btn btn-outline-primary register-button">登録</button>

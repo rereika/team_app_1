@@ -45,13 +45,19 @@ ul li>*:first-child {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 150px;
+  /* ↓をコメントアウト */
+  /* width: 150px; */
 }
 
 .tag-item {
   display: flex;
   flex-direction: row;
   align-items: center;
+  /* ↓4行を新規追加 */
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 442.39px;
+  transform: translateX(1rem);
 }
 
 .tagForm {
