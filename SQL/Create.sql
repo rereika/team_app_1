@@ -15,14 +15,15 @@ CREATE TABLE reports(
   good     VARCHAR(255),
   more     VARCHAR(255),
   tomorrow VARCHAR(255),
-  day      DATE         NOT NULL
+  day      DATE         NOT NULL,
+  KEY fk_table1_report_idx (day)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE report_tags (
-  reports_id INT NOT NULL,
-  tags_id    INT NOT NULL,
-  KEY fk_table1_reports_idx (reports_id),
+  report_day DATE NOT NULL,
+  tags_id    INT  NOT NULL,
+  KEY fk_table1_report_idx (report_day),
   KEY fk_table1_tags1_idx (tags_id),
-  CONSTRAINT fk_table1_reports FOREIGN KEY (reports_id) REFERENCES reports (id),
+  CONSTRAINT fk_table1_report FOREIGN KEY (report_day) REFERENCES reports (day),
   CONSTRAINT fk_table1_tags1 FOREIGN KEY (tags_id) REFERENCES tags (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
