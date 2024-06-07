@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <title>カレンダー</title>
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="goal-time-container">
-        <h1><a id="prev" href="#">&lt;</a><span class="month" style="font-size: 3em;"></span><a id="next" href="#">&gt;</a></h1>
 
-      <table class="time">
-        <tr>
-          <!-- 合計時間をデータベースから入れたい -->
-          <td class="totalTime">合計時間:</td>
-          <td>123h<!-- ここにデータベースから引っ張った数値を入れる --></td>
-        </tr>
-      </table>
-      <table class="goal">
-        <tr>
-          <!-- 今月の目標をデータベースから入れたい -->
-          <td class="monthGoal">目標：</td>
-          <td>
-            <input
-              type="text"
-              id="goal-input"
-              placeholder="目標を入力してください"
-            />
-          </td>
-        </tr>
-      </table>
-    </div>
-    <!-- 合計時間、今月の目標テーブル -->
-    <div class="container">
-      <table class="calendar">
+<head>
+  <meta charset="utf-8" />
+  <title>カレンダー</title>
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="goal-time-container">
+    <h1><a id="prev" href="#">&lt;</a><span class="month" style="font-size: 3em;"></span><a id="next" href="#">&gt;</a>
+    </h1>
+
+    <table class="time">
+      <tr>
+        <!-- 合計時間をデータベースから入れたい -->
+        <td class="totalTime"></td>
+        <td>123h<!-- ここにデータベースから引っ張った数値を入れる --></td>
+      </tr>
+    </table>
+    <table class="goal">
+      <tr>
+        <!-- 今月の目標をデータベースから入れたい -->
+        <td class="monthGoal">目標：</td>
+        <td>
+          <input type="text" id="goal-input" placeholder="目標を入力してください" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- 合計時間、今月の目標テーブル -->
+  <div class="container">
+    <table class="calendar">
       <thead>
         <!-- カレンダーの内容 -->
         <tr>
@@ -99,44 +98,45 @@
           <td></td>
           <td></td>
         </tr>
-     </tbody>
+      </tbody>
+    </table>
+
+    <div class="side">
+      <table class="side-table">
+        <tr>
+          <td>
+            <span class="week_total">55h<!-- 週の合計時間を入れたい --></span>
+          </td>
+          <td>
+            <span class="week_total"><!-- 週の合計時間を入れたい --></span>
+          </td>
+          <td>
+            <span class="week_total"><!-- 週の合計時間を入れたい --></span>
+          </td>
+          <td>
+            <span class="week_total"><!-- 週の合計時間を入れたい --></span>
+          </td>
+          <td>
+            <span class="week_total"><!-- 週の合計時間を入れたい --></span>
+          </td>
+        </tr>
       </table>
-
-      <div class="side">
-        <table class="side-table">
-          <tr>
-            <td>
-              <span class="week_total">55h<!-- 週の合計時間を入れたい --></span>
-            </td>
-            <td>
-              <span class="week_total"><!-- 週の合計時間を入れたい --></span>
-            </td>
-            <td>
-              <span class="week_total"><!-- 週の合計時間を入れたい --></span>
-            </td>
-            <td>
-              <span class="week_total"><!-- 週の合計時間を入れたい --></span>
-            </td>
-            <td>
-              <span class="week_total"><!-- 週の合計時間を入れたい --></span>
-            </td>
-          </tr>
-        </table>
-      </div>
     </div>
+  </div>
 
-    <!-- モーダルウィンドウ -->
-    <dialog id="myModal">
-      <h2 id="modal-date"></h2>
-      <p>学習時間: <span id="modal-study-time"></span></p>
-      <p>良かった点: <span id="modal-good-points"></span></p>
-      <p>もっとよくできる点: <span id="modal-improve-points"></span></p>
-      <p>明日への決意: <span id="modal-commitment"></span></p>
-      <div class="modal-buttons">
-        <button id="close-modal">戻る</button>
-        <button id="edit-modal">編集</button>
-      </div>
-    </dialog>
-    <script src="script.js"></script>
-  </body>
+  <!-- モーダルウィンドウ -->
+  <dialog id="myModal">
+    <h2 id="modal-date"></h2>
+    <p>学習時間: <span id="modal-study-time"></span></p>
+    <p>良かった点: <span id="modal-good-points"></span></p>
+    <p>もっとよくできる点: <span id="modal-improve-points"></span></p>
+    <p>明日への決意: <span id="modal-commitment"></span></p>
+    <div class="modal-buttons">
+      <button id="close-modal">戻る</button>
+      <button id="edit-modal">編集</button>
+    </div>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+
 </html>
