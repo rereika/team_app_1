@@ -178,6 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
+ // 週合計時間枠を追加
+  createTotalWeek();
   }
 
   // タグ情報の表示
@@ -259,6 +261,30 @@ document.addEventListener("DOMContentLoaded", () => {
     createCalendar();
     renderTotalTimePerMonth();
   });
+
+//週合計時間を動的に生成
+  function createTotalWeek() {
+    const tbody = document.querySelector('.calendar tbody');
+    const weekRows = tbody.querySelectorAll('tr').length;
+    const sideTable = document.querySelector('.side-table tbody');
+  
+    // 現在の合計時間枠をクリア
+    while (sideTable.firstChild) {
+      sideTable.removeChild(sideTable.firstChild);
+    }
+  
+    // 必要な数だけ週合計の枠を追加
+    for (let i = 0; i < weekRows; i++) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      const span = document.createElement('span');
+      span.classList.add('week_total');
+      td.appendChild(span);
+      tr.appendChild(td);
+      sideTable.appendChild(tr);
+    }
+  }
+  
 
 
 
