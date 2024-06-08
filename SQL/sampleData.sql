@@ -52,3 +52,15 @@ INSERT INTO report_tags (report_day, tags_id) VALUES
 ('2024-06-09', 7),
 ('2024-06-10', 8),
 ('2024-06-10', 6);
+
+INSERT INTO tagsShadow (name) VALUES
+('JavaScript'),
+('HTML'),
+('CSS'),
+('PHP'),
+('SQL'),
+('Paiza'),
+('AtCoder'),
+('QUEST'),
+('チーム開発'),
+('記事');

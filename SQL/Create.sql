@@ -27,3 +27,7 @@ CREATE TABLE report_tags (
   CONSTRAINT fk_table1_report FOREIGN KEY (report_day) REFERENCES reports (day),
   CONSTRAINT fk_table1_tags1 FOREIGN KEY (tags_id) REFERENCES tags (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE tagsShadow (
+  name VARCHAR(45) NOT NULL
+);
