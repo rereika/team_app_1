@@ -28,3 +28,4 @@ $stmt = $pdo->query($sql4);
 $results[] = $stmt->fetchAll();
 
 echo json_encode($results);
+

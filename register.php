@@ -28,7 +28,7 @@ $goodB = $row['good'];
 $moreB = $row['more'];
 $tomorrowB = $row['tomorrow'];
 
-$stmt = $pdo->query("SELECT tag_name FROM tags");
+$stmt = $pdo->query("SELECT name FROM tagsShadow");
 $storedTags = $stmt->fetchAll();
 
 // ↓これは何用なのか全く覚えていないため、しばらくバグが見つからなければ削除
@@ -44,6 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'add-tag':
       addTag();
+      break;
+    case 'delete':
+      deleteTag($pdo);
       break;
   }
 
@@ -72,7 +75,7 @@ function upOrIn($pdo)
     $selectedTagIds[] = $stmt->fetchColumn();
   }
 
-  // 日付に合致するレコードがあるかを調べ、なければINSERT、あればUPDATE
+  // 日付に合致するレコードがあるかを調べ、なければINSERT、あればUPDATE。ここでは取得カラムをdayにしているがhourかrateでもよいはず
   $stmt = $pdo->prepare("SELECT day FROM reports WHERE day = ?");
   $stmt->execute([$date]);
   $check = $stmt->fetchColumn();
@@ -119,7 +122,17 @@ function upOrIn($pdo)
 
 function addTag()
 {
+  // 追加するときはtagテーブルとtagsShadowテーブル両方に追加せよ
   return;
+}
+
+function deleteTag($pdo)
+{
+  // 一度optionにフォーカスを当てて(青く反転させて)からダブルクリックしないと値が送信されないようだ
+  $registeredTag = filter_input(INPUT_POST, 'tags', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+  // var_dump($registeredTag);
+  $stmt = $pdo->prepare("DELETE FROM tagsShadow WHERE name = ?");
+  $stmt->execute([$registeredTag[0]]);
 }
 
 ?>
@@ -156,9 +169,9 @@ function addTag()
 
         <li class="tag-item">タグ
           <div class="select-container">
-            <select id="tagSelect" name="tags[]" multiple>
+            <select id="tagSelect" name="tags[]" multiple ondblclick="deleteTag('?action=delete')">
               <?php foreach ($storedTags as $tag) : ?>
-                <option value="<?= $tag['tag_name']; ?>" <?= in_array($tag, $selectedTagsB) ? 'selected' : '' ?>><?= $tag['tag_name']; ?></option>
+                <option value="<?= $tag['name']; ?>" <?= in_array($tag, $selectedTagsB) ? 'selected' : '' ?>><?= $tag['name']; ?></option>
               <?php endforeach; ?>
               <option value="new">+</option>
             </select>

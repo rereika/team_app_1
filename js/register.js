@@ -25,6 +25,14 @@ tagSelect.addEventListener('dblclick', (event) => {
     tagSelect.removeChild(event.target);
   }
 });
+function deleteTag(action) {
+  const form = document.querySelector('form');
+  form.action = action;
+  form.submit();
+  if (!confirm('削除の動作がされました。いま選択したタグを削除しますか？')) {
+    return;
+  }
+}
 
 newOptionInput.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {

@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     times.forEach((time) => {
       num += time.hour;
     });
-    document.querySelector('.time .totalTime').textContent = `合計時間: ${num}h`;
+    document.querySelector('.time .totalTime').textContent = `${num}h`;
   }
 
   renderTotalTimePerMonth();
@@ -135,7 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // データ取得
         const jsonData = await getData();
         // 各日付の枠組みを生成
-
         const td = document.createElement(('td'));
         const span = document.createElement('span');
         span.classList.add('date-number');
@@ -155,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       document.querySelector('.calendar tbody').appendChild(tr);
     });
- // 週合計時間枠を追加
+  // 週合計時間枠を追加
   createTotalWeek();
   }
 
