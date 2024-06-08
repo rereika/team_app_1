@@ -278,7 +278,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // MWのクリックイベントとリンクの動的生成とデータ表示
   function addMWEvent(date, jsonData, td) {
     td.addEventListener("click", () => {
-      modalDate.textContent = `${td.firstElementChild.textContent}日`;
+      // 月と日付の両方を表示
+      const clickedDate = new Date(date.uniqueDate);
+      const formattedDate = `${clickedDate.getMonth() + 1}月${clickedDate.getDate()}日`;
+      modalDate.textContent = formattedDate;
+
       const infoMW = jsonData[0].filter(data => {
         return date.uniqueDate === data.day;
       });
@@ -290,10 +294,10 @@ document.addEventListener("DOMContentLoaded", () => {
         modalImprovePoints.textContent = infoMW[0].more;
         modalCommitment.textContent = infoMW[0].tomorrow;
       } else {
-        modalStudyTime.textContent = "";
-        modalGoodPoints.textContent = "";
-        modalImprovePoints.textContent = "";
-        modalCommitment.textContent = "";
+        modalStudyTime.textContent = "データなし";
+        modalGoodPoints.textContent = "データなし";
+        modalImprovePoints.textContent = "データなし";
+        modalCommitment.textContent = "データなし";
       }
 
       // モーダルを表示

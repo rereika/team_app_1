@@ -1,76 +1,86 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>カレンダー</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/calendar.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <title>カレンダー</title>
-  <link rel="stylesheet" href="/css/reset.css" />
-  <link rel="stylesheet" href="/css/calendar.css" />
-</head>
+  <body>
+    <div class="goal-time-container">
+      <h1>
+        <a id="prev" href="#">&lt;</a
+        ><span class="month" style="font-size: 3em"></span
+        ><a id="next" href="#">&gt;</a>
+      </h1>
 
-<body>
-  <div class="goal-time-container">
-    <h1><a id="prev" href="#">&lt;</a><span class="month" style="font-size: 3em;"></span><a id="next" href="#">&gt;</a>
-    </h1>
-
-    <table class="time">
-      <tr>
-        <!-- 合計時間をデータベースから入れたい -->
-        <td class="totalTime"></td>
-      </tr>
-    </table>
-    <table class="goal">
-      <tr>
-        <!-- 今月の目標をデータベースから入れたい -->
-        <td class="monthGoal">目標：</td>
-        <td>
-          <input type="text" id="goal-input" placeholder="目標を入力してください" />
-        </td>
-      </tr>
-    </table>
-  </div>
-  <!-- 合計時間、今月の目標テーブル -->
-  <div class="container">
-    <table class="calendar">
-      <thead>
-        <!-- カレンダーの内容 -->
+      <table class="time">
         <tr>
-          <th>日</th>
-          <th>月</th>
-          <th>火</th>
-          <th>水</th>
-          <th>木</th>
-          <th>金</th>
-          <th>土</th>
+          <!-- 合計時間をデータベースから入れたい -->
+          <td class="totalTime"></td>
         </tr>
-      </thead>
-      <tbody>
-       <!-- JavaScriptで動的に追加される -->
-      </tbody>
-    </table>
-
-    <div class="side">
-      <table class="side-table">
+      </table>
+      <table class="goal">
+        <tr>
+          <!-- 今月の目標をデータベースから入れたい -->
+          <td class="monthGoal">目標：</td>
+          <td>
+            <input
+              type="text"
+              id="goal-input"
+              placeholder="目標を入力してください"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- 合計時間、今月の目標テーブル -->
+    <div class="container">
+      <table class="calendar">
+        <thead>
+          <!-- カレンダーの内容 -->
+          <tr>
+            <th>日</th>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th>土</th>
+          </tr>
+        </thead>
         <tbody>
           <!-- JavaScriptで動的に追加される -->
         </tbody>
       </table>
-    </div>
-  </div>
 
-  <!-- モーダルウィンドウ -->
-  <dialog id="myModal">
-    <h2 id="modal-date"></h2>
-    <p>学習時間: <span id="modal-study-time"></span></p>
-    <p>良かった点: <span id="modal-good-points"></span></p>
-    <p>もっとよくできる点: <span id="modal-improve-points"></span></p>
-    <p>明日への決意: <span id="modal-commitment"></span></p>
-    <div class="modal-buttons">
-      <button id="close-modal">戻る</button>
-      <button id="edit-modal">編集</button>
+      <div class="side">
+        <table class="side-table">
+          <tbody>
+            <!-- JavaScriptで動的に追加される -->
+          </tbody>
+        </table>
+      </div>
     </div>
-  </dialog>
-  <script src="/js/calendar.js"></script>
-</body>
 
+    <!-- モーダルウィンドウ -->
+    <dialog id="myModal">
+      <h2 id="modal-date"></h2>
+      <p class="modal-info">学習時間</p>
+      <p id="modal-study-time"></p>
+      <p class="modal-info">良かった点</p>
+      <p id="modal-good-points"></p>
+      <p class="modal-info">もっとよくできる点</p>
+      <p id="modal-improve-points"></p>
+      <p class="modal-info">明日への決意</p>
+      <p id="modal-commitment"></p>
+      <div class="modal-buttons">
+        <button id="close-modal">戻る</button>
+        <button id="edit-modal">編集</button>
+      </div>
+    </dialog>
+
+    <script src="/js/calendar.js"></script>
+  </body>
 </html>
