@@ -139,6 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const span = document.createElement('span');
         span.classList.add('date-number');
         span.textContent = date.date;
+
+        // 今日の日付ならspanにもtodayクラスを追加
+        if (date.isToday) {
+          span.classList.add('today');
+        }
+        
         td.appendChild(span);
 
         getTags(date, jsonData, td);
