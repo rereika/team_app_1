@@ -92,10 +92,6 @@ input {
   text-align: left;
 }
 
-.calendar .today {
-  background: orange !important;
-}
-
 .calendar th:nth-of-type(1),
 .calendar td:nth-of-type(1) {
   color: red;
@@ -206,6 +202,12 @@ dialog p {
   background-color: #0056b3;
 }
 
-.date-number.today {
-    color:red;
+.date-number{
+  font-size: 17px;
+  color: black;
+}
+
+.calendar .today {
+    color:red !important;
+    background-color: none !important;
 }

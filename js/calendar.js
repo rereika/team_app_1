@@ -184,10 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // 背景色の設定
   function addColor(date, jsonData, td) {
     // 今日をオレンジにする
-    if (date.isToday) {
-      td.classList.add('today');
-    }
-    // 自己評価に応じて背景色を設定
+   // if (date.isToday) {
+      //td.classList.add('today');
+    //}
+    自己評価に応じて背景色を設定
     const rating = jsonData[0].filter(data => {
       return date.uniqueDate === data.day;
     });
