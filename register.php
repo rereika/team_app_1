@@ -18,15 +18,25 @@ $stmt = $pdo->prepare("SELECT hour, rate, studies, good, more, tomorrow FROM rep
 $stmt->execute([$date]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// BはBefore(初期値)のB
-$hourB = $row['hour'];
-$rateB = $row['rate'];
-// rateのみバリデーションが必要、他のNOT NULLカラムはほとんど初期値がある
-$rateB = $rateB !== NULL ? $row['rate'] : 1;
-$studiesB = $row['studies'];
-$goodB = $row['good'];
-$moreB = $row['more'];
-$tomorrowB = $row['tomorrow'];
+// ページ上のエラー表示対策
+if ($row !== false) {
+    // BはBefore(初期値)のB
+    $hourB = $row['hour'];
+    $rateB = $row['rate'];
+    // rateのみバリデーションが必要、他のNOT NULLカラムはほとんど初期値がある
+    $rateB = $rateB !== NULL ? $row['rate'] : 1;
+    $studiesB = $row['studies'];
+    $goodB = $row['good'];
+    $moreB = $row['more'];
+    $tomorrowB = $row['tomorrow'];
+} else {
+    $hourB = 0;
+    $rateB = 1;
+    $studiesB = '';
+    $goodB = '';
+    $moreB = '';
+    $tomorrowB = '';
+}
 
 $stmt = $pdo->query("SELECT name FROM tagsShadow");
 $storedTags = $stmt->fetchAll();
