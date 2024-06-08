@@ -10,7 +10,7 @@
   display: none;
 }
 
-header {
+.btn1 {
   width: 700px;
   margin: 30px auto;
   text-align: left;
@@ -94,7 +94,7 @@ textarea {
 }
 
 /* ↓を新規追加 */
-.score div + div {
+.score div+div {
   margin-left: 10px;
 }
 
@@ -103,7 +103,7 @@ li .score div label {
   /* ラジオボタンとラベルの間の余白 */
 }
 
-footer {
+.btn2 {
   width: 700px;
   margin: 30px auto;
   text-align: right;

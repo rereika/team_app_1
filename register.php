@@ -150,7 +150,9 @@ function deleteTag($pdo)
 
 <body>
   <header>
+    <div class="btn1">
     <button type="button" class="btn btn-outline-primary list-button">一覧へ</button>
+    </div>
   </header>
 
   <div class="inner">
@@ -210,7 +212,9 @@ function deleteTag($pdo)
           </div>
         </li>
       </ul>
+      <div class="btn2">
       <button type="submit" class="btn btn-outline-primary register-button">登録</button>
+      </div>
     </form>
   </div>
 
