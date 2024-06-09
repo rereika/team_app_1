@@ -207,6 +207,6 @@ dialog p {
   color: black;
 }
 
-.date-number .today {
+.calendar .today {
     color:red !important;
 }
