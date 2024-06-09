@@ -174,11 +174,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (date.isToday) {
           span.classList.add('today');
         }
-
         td.appendChild(span);
 
         getTags(date, jsonData, td);
         addColor(date, jsonData, td);
+
+        invisibleSpan = document.createElement('span');
+        invisibleSpan.style.display = 'none';
+        invisibleMonth = date.uniqueDate.substring(5, 7);
+        invisibleSpan.textContent = invisibleMonth.charAt(0) == "0" ? invisibleMonth.substring(1) : invisibleMonth;
+        if (invisibleMonth != month + 1) {
+          td.style.background = 'transparent';
+          td.querySelectorAll('div.event').forEach((a) => {
+            a.textContent = ' ';
+          });
+        }
+        td.appendChild(invisibleSpan);
 
         // はみ出ている前月分と来月分の数字を薄くする
         if (date.isDisabled) {
