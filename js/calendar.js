@@ -40,6 +40,33 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('.time .totalTime').textContent = `${num}h`;
   }
 
+  // 週ごとの合計時間を計算・表示
+  async function renderWeeklyTotals() {
+    const jsonData = await getData();
+    const weeks = document.querySelectorAll('.calendar tbody tr');
+    const weeklyTotals = [];
+    // 週ごとの合計時間を計算
+    weeks.forEach(week => {
+      let weeklyTotal = 0;
+      week.querySelectorAll('td').forEach(day => {
+        const date = day.querySelector('.date-number').textContent;
+        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+        const dayData = jsonData[3].find(d => d.day === formattedDate);
+        if (dayData) {
+          weeklyTotal += parseFloat(dayData.hour); // 週ごとの合計時間を計算
+        }
+      });
+      weeklyTotals.push(weeklyTotal);
+    });
+    // 週ごとの合計時間を表示
+    const sideTable = document.querySelector('.side-table tbody');
+    weeklyTotals.forEach((total, index) => {
+      const row = sideTable.rows[index];
+      const cell = row.cells[0];
+      cell.querySelector('.week_total').textContent = `${total}h`;
+    });
+  }
+
   renderTotalTimePerMonth();
 
   // ここからカレンダー自動生成
@@ -162,6 +189,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   // 週合計時間枠を追加
   createTotalWeek();
+  // 週合計時間を動的に生成
+  renderWeeklyTotals();
   }
 
   // タグ情報の表示
