@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (date.isToday) {
           span.classList.add('today');
         }
-        
+
         td.appendChild(span);
 
         getTags(date, jsonData, td);
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
    // if (date.isToday) {
       //td.classList.add('today');
     //}
-    自己評価に応じて背景色を設定
+    // 自己評価に応じて背景色を設定
     const rating = jsonData[0].filter(data => {
       return date.uniqueDate === data.day;
     });

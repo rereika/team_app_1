@@ -4,6 +4,14 @@ require('connectDB.php');
 
 $date = $_SERVER['QUERY_STRING'];
 
+// 先頭に表示する日付を取得・整形
+$showYear = substr($date, 0, 4);
+$showMonth = substr($date, 5, 2);
+$showMonth = $showMonth[0] === "0" ? substr($showMonth, 1) : $showMonth;
+$showDate = substr($date, 8, 2);
+$showDate = $showDate[0] === "0" ? substr($showDate, 1) : $showDate;
+$fullDate = $showYear . '年' . $showMonth . '月' . $showDate . '日';
+
 $stmt = $pdo->prepare("SELECT t.tag_name
                          FROM tags AS t
                     LEFT JOIN report_tags AS rt
@@ -173,7 +181,7 @@ function deleteTag($pdo)
   <div class="inner">
     <form action="?action=upOrIn" method="post">
       <input type="hidden" name="date" value="<?= $date; ?>">
-      <h1>10月7日（サンプル）</h1>
+      <h1><?= $fullDate; ?></h1>
       <ul>
         <li>学習時間
           <select id="study time" name="hour">
