@@ -209,5 +209,5 @@ dialog p {
 
 .calendar .today {
     color:red !important;
-    background-color: none !important;
+    background-color: transparent !important;
 }
