@@ -20,41 +20,46 @@ tagSelect.addEventListener('change', function () {
   }
 });
 
-tagSelect.addEventListener('dblclick', (event) => {
-  if (event.target.tagName === 'OPTION') {
-    tagSelect.removeChild(event.target);
-  }
-});
+function addTag(action) {
+  const form = document.querySelector('form');
+  form.action = action;
+  form.submit();
+  alert("タグが追加されました");
+}
+// 削除時にページ遷移するので不要
+// tagSelect.addEventListener('dblclick', (event) => {
+//   if (event.target.tagName === 'OPTION') {
+//     tagSelect.removeChild(event.target);
+//   }
+// });
 function deleteTag(action) {
   const form = document.querySelector('form');
   form.action = action;
   form.submit();
-  if (!confirm('削除の動作がされました。いま選択したタグを削除しますか？')) {
-    return;
-  }
+  alert("選択したタグが削除されました");
 }
 
-newOptionInput.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    const newOptionValue = newOptionInput.value.trim();
-    if (newOptionValue) {
-      //新しいoption要素を作成
-      const newOption = document.createElement('option');
-      //全て小文字で登録し、重複を防ぐ
-      newOption.value = newOptionValue.toLowerCase();
-      newOption.text = newOptionValue;
-      //新しいオプションを選択状態にする
-      newOption.selected = true;
-      //新しいオプションをプラスオプションの手前に追加
-      tagSelect.insertBefore(newOption, tagSelect.options[tagSelect.options.length - 1]);
-      //入力フィールドを非表示にする
-      newOptionInput.style.display = 'none';
-      //入力フィールドを空にする
-      newOptionInput.value = '';
-    }
-  }
-});
+// newOptionInput.addEventListener('keydown', function (event) {
+//   if (event.key === 'Enter') {
+//     event.preventDefault();
+//     const newOptionValue = newOptionInput.value.trim();
+//     if (newOptionValue) {
+//       //新しいoption要素を作成
+//       const newOption = document.createElement('option');
+//       //全て小文字で登録し、重複を防ぐ
+//       newOption.value = newOptionValue.toLowerCase();
+//       newOption.text = newOptionValue;
+//       //新しいオプションを選択状態にする
+//       newOption.selected = true;
+//       //新しいオプションをプラスオプションの手前に追加
+//       tagSelect.insertBefore(newOption, tagSelect.options[tagSelect.options.length - 1]);
+//       //入力フィールドを非表示にする
+//       newOptionInput.style.display = 'none';
+//       //入力フィールドを空にする
+//       newOptionInput.value = '';
+//     }
+//   }
+// });
 
 document.addEventListener("DOMContentLoaded", function () {
   // ボタン要素を取得
