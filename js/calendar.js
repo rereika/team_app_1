@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         invisibleSpan.textContent = invisibleMonth.charAt(0) == "0" ? invisibleMonth.substring(1) : invisibleMonth;
         if (invisibleMonth != month + 1) {
           td.style.background = 'transparent';
-          td.querySelectorAll('div').forEach((a) => {
+          td.querySelectorAll('div.event').forEach((a) => {
             a.textContent = ' ';
           });
         }
