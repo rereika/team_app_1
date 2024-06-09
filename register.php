@@ -13,6 +13,7 @@ $stmt = $pdo->prepare("SELECT t.tag_name
                         WHERE r.day = ?");
 $stmt->execute([$date]);
 $selectedTagsB = $stmt->fetchAll();
+$selectedTagsB = array_column($selectedTagsB, 'tag_name');
 
 $stmt = $pdo->prepare("SELECT hour, rate, studies, good, more, tomorrow FROM reports WHERE day = ?");
 $stmt->execute([$date]);
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       upOrIn($pdo);
       break;
     case 'add-tag':
-      addTag();
+      addTag($pdo);
       break;
     case 'delete':
       deleteTag($pdo);
@@ -120,10 +121,14 @@ function upOrIn($pdo)
   }
 }
 
-function addTag()
+function addTag($pdo)
 {
   // 追加するときはtagテーブルとtagsShadowテーブル両方に追加せよ
-  return;
+  $newTag = filter_input(INPUT_POST, 'new-tag');
+  $stmt = $pdo->prepare("INSERT INTO tags (tag_name) VALUES (?)");
+  $stmt->execute([$newTag]);
+  $stmt = $pdo->prepare("INSERT INTO tagsShadow (name) VALUES (?)");
+  $stmt->execute([$newTag]);
 }
 
 function deleteTag($pdo)
@@ -155,8 +160,8 @@ function deleteTag($pdo)
 
   <div class="inner">
     <form action="?action=upOrIn" method="post">
-
       <input type="hidden" name="date" value="<?= $date; ?>">
+      <h1>10月7日（サンプル）</h1>
       <ul>
         <li>学習時間
           <select id="study time" name="hour">
@@ -171,11 +176,12 @@ function deleteTag($pdo)
           <div class="select-container">
             <select id="tagSelect" name="tags[]" multiple ondblclick="deleteTag('?action=delete')">
               <?php foreach ($storedTags as $tag) : ?>
-                <option value="<?= $tag['name']; ?>" <?= in_array($tag, $selectedTagsB) ? 'selected' : '' ?>><?= $tag['name']; ?></option>
+                <?php var_dump($tag); ?>
+                <option value="<?= $tag['name']; ?>" <?= in_array($tag['name'], $selectedTagsB) ? 'selected' : '' ?>><?= $tag['name']; ?></option>
               <?php endforeach; ?>
               <option value="new">+</option>
             </select>
-            <input type="text" id="newTag" class="new-tag" placeholder="新しいタグを入力">
+            <input type="text" id="newTag" class="new-tag" name="new-tag" placeholder="新しいタグを入力" onblur="addTag('?action=add-tag')">
           </div>
         </li>
 
