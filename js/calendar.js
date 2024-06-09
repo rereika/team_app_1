@@ -49,11 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
     weeks.forEach(week => {
       let weeklyTotal = 0;
       week.querySelectorAll('td').forEach(day => {
-        const date = day.querySelector('.date-number').textContent;
-        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-        const dayData = jsonData[3].find(d => d.day === formattedDate);
-        if (dayData) {
-          weeklyTotal += parseFloat(dayData.hour); // 週ごとの合計時間を計算
+        const span = day.querySelector('.date-number');
+        if (span && !span.classList.contains('disabled')) { // disabledクラスを持つ要素はカウントしない
+          const date = span.textContent;
+          const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`; // テキストを日付に変換
+          const dayData = jsonData[3].find(d => d.day === formattedDate);
+          if (dayData) {
+            weeklyTotal += parseFloat(dayData.hour);
+          }
         }
       });
       weeklyTotals.push(weeklyTotal);
